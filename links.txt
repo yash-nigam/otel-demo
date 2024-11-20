@@ -1,1 +1,1 @@
-
+https://medium.com/@gleydsoncavalcanti/sending-traces-with-the-grafana-agent-for-grafana-tempo-4092b25c35d0
