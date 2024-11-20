@@ -188,3 +188,114 @@ Conclusion
 In this case, metrics, traces, and logs combined reveal that the root cause of the intermittent 500 errors is a database query timeout under heavy load. The metrics highlight the spike in errors, traces show where the delay is happening, and logs provide detailed error messages pinpointing the issue in the database.
 
 Without using all three signals, it would be very difficult to understand that the problem originates from Database Service's inability to handle load, affecting the User Service's ability to process logins and generate tokens. These insights are key to troubleshooting and resolving the issue effectively.
+===========================================================================================================================
+
+Crafting a Real-World Example: A Flask App with OpenTelemetry
+
+Scenario:
+
+Let's consider a Flask application that serves product information from a database. We'll introduce a potential issue: a slow-performing endpoint.
+
+Project Structure:
+
+my_app/
+├── app.py
+├── config.py
+├── models.py
+├── requirements.txt
+├── templates/
+│   └── index.html
+└── utils/
+    └── otel_utils.py
+Code Implementation:
+
+1. app.py:
+
+Python
+from flask import Flask, render_template
+from utils.otel_utils import init_tracer
+
+app = Flask(__name__)
+
+# Initialize OpenTelemetry Tracer
+init_tracer("my_flask_app")
+
+@app.route('/')
+def index():
+    # Simulate a slow database query
+    products = get_products_from_db()  # A slow operation
+    return render_template('index.html', products=products)
+
+# ... other routes and error handlers
+
+if __name__ == '__main__':
+    app.run(debug=True)
+Use code with caution.
+
+2. utils/otel_utils.py:
+
+Python
+import opentelemetry.trace as trace
+from opentelemetry.instrumentation.flask import FlaskInstrumentor
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor   
+
+from opentelemetry.exporter.otlp.trace_exporter import OTLPTraceExporter
+
+def init_tracer(service_name):
+    tracer_provider = TracerProvider()
+    tracer_provider.add_span_processor(BatchSpanProcessor(OTLPTraceExporter()))
+    trace.set_tracer_provider(tracer_provider)
+    FlaskInstrumentor().instrument()
+Use code with caution.
+
+3. templates/index.html:
+
+HTML
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+</head>
+<body>
+    <h1>Product List</h1>
+    <ul>
+        {% for product in products %}
+        <li>{{ product.name }}</li>
+        {% endfor %}
+    </ul>
+</body>   
+
+</html>
+Use code with caution.
+
+Troubleshooting with OpenTelemetry:
+
+Identifying the Slow Endpoint:
+
+Metrics: Monitor the response time of the / endpoint using a metrics exporter like Prometheus or Datadog.
+Logs: Log the start and end times of the database query to pinpoint the bottleneck.
+Traces: Use a tracing backend like Jaeger or Zipkin to visualize the request flow, including the database call.
+Analyzing the Slow Database Query:
+
+Metrics: Monitor the database query execution time and error rates.
+Logs: Log detailed information about the query, including parameters and results.
+Traces: Inspect the database span in the trace to identify potential issues like slow network calls or inefficient queries.
+Optimizing the Database Query:
+
+Indexing: Create appropriate indexes on the database tables to speed up query execution.
+Query Optimization: Rewrite the query to use efficient joins and filtering.
+Caching: Implement caching mechanisms to reduce database load.
+Key Benefits of OpenTelemetry:
+
+Centralized Observability: Unified view of metrics, logs, and traces.
+Root Cause Analysis: Efficiently pinpoint performance bottlenecks and errors.
+Proactive Monitoring: Detect issues before they impact users.
+Flexible Instrumentation: Easily integrate with different frameworks and libraries.
+Vendor-Neutral: Works with various backend systems.
+By leveraging OpenTelemetry, we can gain valuable insights into application performance, identify issues quickly, and take corrective actions to ensure optimal user experience.
+
+Note: Remember to configure your chosen backend (Jaeger, Zipkin, etc.) and set up exporters in your OpenTelemetry configuration to collect and visualize the generated traces and metrics.
+
+
+Sources and related content
