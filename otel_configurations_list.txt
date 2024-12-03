@@ -1,0 +1,9 @@
+https://github.com/highlight/highlight/blob/1f71887d301a32b1fbba6dbf49b90df1862ddb01/docker/collector.yml
+https://github.com/bram2w/baserow/blob/d5b05c5ede0d0abd123f7469d04cfbf7b1b437e4/deploy/otel/otel-collector-config.yaml
+https://github.com/shuttle-hq/shuttle/blob/5431b1fe8a0269518a9f92047d844e62c631a883/extras/otel/otel-collector-config.yaml
+https://github.com/shuttle-hq/shuttle/blob/5431b1fe8a0269518a9f92047d844e62c631a883/extras/otel/otel-collector-config.yaml
+https://github.com/gmspgua/OpenTelemetry/blob/3f61476a22b0fc94ac4545519da2ef34ae891df4/otel-collector-config.yaml_#L4
+https://github.com/aws-samples/prometheus-for-ecs/blob/a9aaa21232f32d8e21281e8aebdd873dff9852c7/deploy-adot/otel-collector-config.yaml.template
+https://github.com/Azure-Samples/Ignite2024-Lab411/blob/be989b6a6c08217cc597a28b4a7dacce8cb7c6b0/Exercise-3/otel-collector-config.yaml
+https://github.com/obs-gh-jaydave/FullStack_Tracker/blob/10fad5e4ade7427ff42b799542d33dc816ed6f3d/otel-collector-config.yaml#L19
+https://github.com/aleph-zero/observe-custom-metrics/blob/4cdc8e06aa884687824bb89900893f50ce56b9cc/cpu-temperature-otel/otel-collector.yaml#L14
